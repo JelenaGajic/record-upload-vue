@@ -1,16 +1,16 @@
 import http from "../http-common";
 
 class VehicleDataService {
+  create(data) {
+    return http.post("/listings", data);
+  }
+  
   getAll() {
     return http.get("/listings");
   }
 
   get(id) {
     return http.get(`/listings/${id}`);
-  }
-
-  create(data) {
-    return http.post("/listings", data);
   }
 
   update(id, data) {

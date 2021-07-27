@@ -2,35 +2,40 @@
 	<div v-if="vehicles.length">
 		<div v-for="(record, ind) in vehicles" :key="ind">
 			<div class="line">
-				<h4>{{ record.title }} - {{record.vin}}</h4>
-				<router-link :to="`/record/${record.id}`" class="btn btn-info">Details</router-link>
+				<p class="title">title:{{ record.title }} vin:{{ record.vin }} id:{{ record.listingId }}</p>
+				<router-link :to="`/record/${record.listingId}`" class="button is-primary"
+					>Details</router-link
+				>
 			</div>
 		</div>
 	</div>
+	<div v-else>No available records</div>
 </template>
 
 
 <script>
-import RecordDatsService from "../services/RecordDatsService";
+import RecordDataService from "../services/RecordDataService";
 
 export default {
-	name: 'Listings',
-	
-	data () {
+	name: "Listings",
+
+	data() {
 		return {
 			vehicles: [],
-			activeVehicle: null
-		}
+			activeVehicle: null,
+		};
 	},
-	
+
 	methods: {
 		retrieveVehicles() {
-			RecordDatsService.getAll()
-				.then(response => {
+			RecordDataService.getAll()
+				.then((response) => {
 					this.vehicles = response.data;
-					console.log(response.data);
+					
+					console.log('vehicles');
+					console.log(this.vehicles);
 				})
-				.catch(e => {
+				.catch((e) => {
 					console.log(e);
 				});
 		},
@@ -40,7 +45,6 @@ export default {
 		// 	this.currentVehicle = null;
 		// 	this.currentIndex = -1;
 		// },
-
 
 		// TODO: remove
 		// setActiveVehicle(Vehicle, index) {
@@ -58,7 +62,7 @@ export default {
 		// 	console.log(e);
 		// 	});
 		// },
-		
+
 		// searchTitle() {
 		// VehicleDataService.findByTitle(this.title)
 		// 	.then(response => {
@@ -70,15 +74,21 @@ export default {
 		// 	});
 		// }
 	},
-  mounted() {
-    this.retrieveVehicles();
-  }
-}
+	mounted() {
+		this.retrieveVehicles();
+	},
+};
 </script>
 
 <style>
 .line {
 	display: flex;
+}
+
+.title {
+	margin: 0 40px;
+	height: 38px;
+	line-height: 38px;
 }
 </style>
 
