@@ -6,7 +6,10 @@
 				<p>Title: {{ currentRecord.title }}</p>
 				<p>Description: {{ currentRecord.description }}</p>
 				<p>Vin: {{ currentRecord.vin }}</p>
-				<p>Image: {{ currentRecord.image }}</p>
+				<p>Images:</p>
+				<div v-for="(image, ind) in currentRecord.images" :key="ind">
+					<p>Image {{ ind + 1}}: {{ image.url }}</p>
+				</div>
 				<p>Id: {{ currentRecord.listingId }}</p>
 			</div>
 
