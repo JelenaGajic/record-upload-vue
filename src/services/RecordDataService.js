@@ -25,8 +25,8 @@ class VehicleDataService {
     return http.delete(`/listings`);
   }
 
-  findByTitle(title) {
-    return http.get(`/listings?title=${title}`);
+  findByVin(vin) {
+    return http.get(`/listings?vin=${vin}`);
   }
 }
 

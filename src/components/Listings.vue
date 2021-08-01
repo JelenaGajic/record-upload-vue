@@ -1,5 +1,8 @@
 <template>
 	<div v-if="vehicles.length">
+		<input type="text" v-model="searchVehicle">
+		<button @click="searchVin">Search</button>
+		<button @click="removeAllVehicles">Delete All Records</button>
 		<div v-for="(record, ind) in vehicles" :key="ind">
 			<div class="line">
 				<p class="title">title:{{ record.title }} vin:{{ record.vin }} id:{{ record.listingId }}</p>
@@ -22,7 +25,7 @@ export default {
 	data() {
 		return {
 			vehicles: [],
-			activeVehicle: null,
+			searchVehicle: null,
 		};
 	},
 
@@ -52,27 +55,27 @@ export default {
 		// 	this.currentIndex = index;
 		// },
 
-		// removeAllVehicles() {
-		// VehicleDataService.deleteAll()
-		// 	.then(response => {
-		// 	console.log(response.data);
-		// 	this.refreshList();
-		// 	})
-		// 	.catch(e => {
-		// 	console.log(e);
-		// 	});
-		// },
+		removeAllVehicles() {
+		RecordDataService.deleteAll()
+			.then(response => {
+				console.log(response.data);
+				this.vehicles = [];
+			})
+			.catch(e => {
+			console.log(e);
+			});
+		},
 
-		// searchTitle() {
-		// VehicleDataService.findByTitle(this.title)
-		// 	.then(response => {
-		// 	this.vehicles = response.data;
-		// 	console.log(response.data);
-		// 	})
-		// 	.catch(e => {
-		// 	console.log(e);
-		// 	});
-		// }
+		searchVin() {
+		RecordDataService.findByVin(this.searchVehicle)
+			.then(response => {
+				this.vehicles = response.data;
+				console.log(response.data);
+			})
+			.catch(e => {
+			console.log(e);
+			});
+		}
 	},
 	mounted() {
 		this.retrieveVehicles();
